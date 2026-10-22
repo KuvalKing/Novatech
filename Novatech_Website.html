@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NovaTech | Where Ideas Meet Technology</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#0B0F19',
+                            card: 'rgba(17, 24, 39, 0.7)',
+                            cyan: '#00F0FF',
+                            purple: '#7000FF',
+                            blue: '#0072FF',
+                            accent: '#3B82F6'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Outfit', 'sans-serif']
+                    },
+                    boxShadow: {
+                        neon: '0 0 20px rgba(0, 240, 255, 0.35)',
+                        purple: '0 0 20px rgba(112, 0, 255, 0.35)'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #07090e;
+            color: #f3f4f6;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        .glass-card {
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card-hover:hover {
+            border-color: rgba(0, 240, 255, 0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px -10px rgba(0, 240, 255, 0.2);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #00F0FF 0%, #7000FF 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #00F0FF 0%, #7000FF 100%);
+        }
+        .glow-orb-1 {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(0,240,255,0.15) 0%, rgba(0,0,0,0) 70%);
+            top: -100px;
+            left: -100px;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .glow-orb-2 {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(112,0,255,0.15) 0%, rgba(0,0,0,0) 70%);
+            bottom: 10%;
+            right: -150px;
+            pointer-events: none;
+            z-index: 0;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #07090e;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1f2937;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00F0FF;
+        }
+        .nav-link.active {
+            color: #00F0FF;
+            border-bottom: 2px solid #00F0FF;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between relative selection:bg-cyan-500 selection:text-black">
+
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-50 glass-card border-b border-gray-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3 cursor-pointer py-1" onclick="navigateTo('home')">
+                    <img src="1000673147.png" alt="NovaTech Logo" class="h-12 sm:h-14 w-auto object-contain hover:scale-105 transition-transform duration-300 filter drop-shadow-[0_0_12px_rgba(0,240,255,0.4)]" onerror="this.style.display='none'; document.getElementById('fallback-logo').classList.remove('hidden');">
+                    <div id="fallback-logo" class="hidden flex items-center space-x-3">
+                            <div class="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
+                            </div>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-heading font-extrabold text-2xl tracking-wider text-white leading-none">
+                                NOVA<span class="gradient-text">TECH</span>
+                            </span>
+                            <span class="text-[9px] tracking-[0.2em] text-gray-400 uppercase font-semibold mt-1">AI • AUTOMATION • INNOVATION</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Desktop Nav Navigation -->
+                <nav class="hidden md:flex space-x-8">
+                    <button onclick="navigateTo('home')" id="nav-home" class="nav-link text-gray-300 hover:text-cyan-400 text-sm font-medium transition duration-200 py-1 active">Home</button>
+                    <button onclick="navigateTo('about')" id="nav-about" class="nav-link text-gray-300 hover:text-cyan-400 text-sm font-medium transition duration-200 py-1">About Us</button>
+                    <button onclick="navigateTo('services')" id="nav-services" class="nav-link text-gray-300 hover:text-cyan-400 text-sm font-medium transition duration-200 py-1">Services</button>
+                    <button onclick="navigateTo('academy')" id="nav-academy" class="nav-link text-gray-300 hover:text-cyan-400 text-sm font-medium transition duration-200 py-1">AI Academy</button>
+                    <button onclick="navigateTo('contact')" id="nav-contact" class="nav-link text-gray-300 hover:text-cyan-400 text-sm font-medium transition duration-200 py-1">Contact</button>
+                </nav>
+
+                <!-- Action Button -->
+                <div class="hidden md:flex items-center">
+                        </span>
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-white p-2 focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer -->
+        <div id="mobile-menu" class="hidden md:hidden glass-card border-t border-gray-800 px-4 pt-2 pb-6 space-y-3">
+            <button onclick="navigateTo('home'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-cyan-400 hover:bg-gray-800/50">Home</button>
+            <button onclick="navigateTo('about'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-cyan-400 hover:bg-gray-800/50">About Us</button>
+            <button onclick="navigateTo('services'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-cyan-400 hover:bg-gray-800/50">Services</button>
+            <button onclick="navigateTo('academy'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-cyan-400 hover:bg-gray-800/50">AI Academy</button>
+            <button onclick="navigateTo('contact'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-cyan-400 hover:bg-gray-800/50">Contact</button>
+            <button onclick="navigateTo('contact'); toggleMobileMenu();" class="w-full mt-2 gradient-bg text-white font-semibold py-2.5 rounded-xl shadow-neon">Get Started</button>
+        </div>
+    </header>
+
+    <main class="flex-grow relative z-10">
+        <div class="glow-orb-1"></div>
+        <div class="glow-orb-2"></div>
+
+        <!-- ==================== PAGE: HOME ==================== -->
+        <section id="page-home" class="page-view space-y-24 pb-16">
+            <!-- Hero Section -->
+            <div class="relative pt-12 pb-16 lg:pt-20 lg:pb-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div class="space-y-6 text-center lg:text-left">
+                        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-cyan-500/30 bg-cyan-950/30 text-cyan-400 text-xs font-semibold uppercase tracking-wider shadow-inner">
+                            <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+                            Next-Gen Tech & AI Acceleration
+                        </div>
+                        <h1 class="font-heading text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight">
+                            Where Ideas Meet <span class="gradient-text">Technology</span> & Innovation.
+                        </h1>
+                        <p class="text-gray-400 text-base sm:text-lg max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                            NovaTech helps individuals, creators, and businesses build custom web applications, mobile apps, and autonomous AI agents. We transform concepts into future-ready digital solutions.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
+                            <button onclick="navigateTo('services')" class="px-7 py-3.5 rounded-xl gradient-bg font-semibold text-white shadow-neon hover:opacity-90 transition transform hover:-translate-y-0.5">
+                                Explore Services <i class="fa-solid fa-arrow-right-long ml-2"></i>
+                            </button>
+                            <button onclick="navigateTo('academy')" class="px-7 py-3.5 rounded-xl glass-card font-semibold text-gray-200 border border-gray-700 hover:border-cyan-400 hover:text-cyan-400 transition">
+                                Join AI Classes <i class="fa-solid fa-graduation-cap ml-2"></i>
+                            </button>
+                        </div>
+
+                        <!-- Stats Banner -->
+                        <div class="pt-8 grid grid-cols-3 gap-4 border-t border-gray-800/80">
+                            <div>
+                                <p class="font-heading text-2xl sm:text-3xl font-extrabold text-white">99%</p>
+                                <p class="text-xs text-gray-400">Client Satisfaction</p>
+                            </div>
+                            <div>
+                                <p class="font-heading text-2xl sm:text-3xl font-extrabold text-white">10+</p>
+                                <p class="text-xs text-gray-400">AI Agents Built</p>
+                            </div>
+                            <div>
+                                <p class="font-heading text-2xl sm:text-3xl font-extrabold text-white">20+</p>
+                                <p class="text-xs text-gray-400">Students Trained</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Code / Tech Canvas Card -->
+                    <div class="relative">
+                            <div class="flex items-center justify-between pb-4 border-b border-gray-800">
+                                </div>
+                                    <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Services Section -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto space-y-4 mb-16">
+                    <h2 class="text-xs font-semibold text-cyan-400 uppercase tracking-widest">Our Expertise</h2>
+                    <p class="font-heading text-3xl sm:text-4xl font-bold text-white">Empowering Digital Transformation</p>
+                    <p class="text-gray-400 text-sm sm:text-base">From custom code buildouts to graphics design and practical hands-on learning.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Service 1 -->
+                    <div class="glass-card glass-card-hover rounded-2xl p-6 flex flex-col justify-between">
+                        <div class="space-y-4">
+                            <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 text-xl">
+                                <i class="fa-solid fa-laptop-code"></i>
+                            </div>
+                            <h3 class="font-heading font-bold text-xl text-white">Web & Mobile Apps</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed">Tailor-made websites, responsive web apps, and native iOS/Android mobile applications.</p>
+                        </div>
+                        <button onclick="navigateTo('services')" class="mt-6 text-cyan-400 hover:text-cyan-300 text-sm font-semibold flex items-center gap-2">Read More <i class="fa-solid fa-arrow-right text-xs"></i></button>
+                    </div>
+
+                    <!-- Service 2 -->
+                    <div class="glass-card glass-card-hover rounded-2xl p-6 flex flex-col justify-between">
+                        <div class="space-y-4">
+                            <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 text-xl">
+                                <i class="fa-solid fa-robot"></i>
+                            </div>
+                            <h3 class="font-heading font-bold text-xl text-white">Autonomous AI Agents</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed">Intelligent AI agents and workflow automation that streamline business operations.</p>
+                        </div>
+                        <button onclick="navigateTo('services')" class="mt-6 text-purple-400 hover:text-purple-300 text-sm font-semibold flex items-center gap-2">Read More <i class="fa-solid fa-arrow-right text-xs"></i></button>
+                    </div>
+
+                    <!-- Service 3 -->
+                    <div class="glass-card glass-card-hover rounded-2xl p-6 flex flex-col justify-between">
+                        <div class="space-y-4">
+                            <div class="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 text-xl">
+                                <i class="fa-solid fa-brain"></i>
+                            </div>
+                            <h3 class="font-heading font-bold text-xl text-white">AI & Python Training</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed">Practical classes for mastering AI acceleration, Python programming, and future tech skills.</p>
+                        </div>
+                        <button onclick="navigateTo('academy')" class="mt-6 text-blue-400 hover:text-blue-300 text-sm font-semibold flex items-center gap-2">Explore Courses <i class="fa-solid fa-arrow-right text-xs"></i></button>
+                    </div>
+
+                    <!-- Service 4 -->
+                    <div class="glass-card glass-card-hover rounded-2xl p-6 flex flex-col justify-between">
+                        <div class="space-y-4">
+                            <div class="w-12 h-12 rounded-xl bg-pink-500/10 border border-pink-500/30 flex items-center justify-center text-pink-400 text-xl">
+                                <i class="fa-solid fa-palette"></i>
+                            </div>
+                            <h3 class="font-heading font-bold text-xl text-white">Design & Editing</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed">Creative banner graphics design, media editing, UI/UX aesthetics, and branding assets.</p>
+                        </div>
+                        <button onclick="navigateTo('services')" class="mt-6 text-pink-400 hover:text-pink-300 text-sm font-semibold flex items-center gap-2">Read More <i class="fa-solid fa-arrow-right text-xs"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Call to Action Banner -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="glass-card rounded-3xl p-8 sm:p-12 relative overflow-hidden border border-cyan-500/30">
+                    <div class="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
+                        <div class="space-y-3 text-center lg:text-left">
+                            <h2 class="font-heading text-3xl font-extrabold text-white">Ready to automate & scale your project?</h2>
+                            <p class="text-gray-300 text-sm sm:text-base max-w-xl">Consult with NovaTech today for tailored software development or skill acceleration.</p>
+                        </div>
+                        <button onclick="navigateTo('contact')" class="px-8 py-4 rounded-xl gradient-bg font-semibold text-white shadow-neon hover:scale-105 transition">
+                            Start Your Project
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== PAGE: ABOUT US ==================== -->
+        <section id="page-about" class="page-view hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
+            <div class="text-center max-w-3xl mx-auto space-y-4">
+                <h2 class="text-xs font-semibold text-cyan-400 uppercase tracking-widest">Who We Are</h2>
+                <h1 class="font-heading text-4xl sm:text-5xl font-extrabold text-white">About <span class="gradient-text">NovaTech</span></h1>
+                <p class="text-gray-400 text-base sm:text-lg">Turning ideas into intelligent digital solutions while preparing the next generation for an AI-driven future.</p>
+            </div>
+
+            <!-- Story Narrative -->
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6 text-gray-300 text-base leading-relaxed">
+                    <p class="glass-card p-6 rounded-2xl border-l-4 border-l-cyan-400">
+                        NovaTech is a forward-thinking technology company focused on helping individuals and businesses harness the power of Artificial Intelligence. We provide intelligent AI agents and develop customized web applications, websites, and mobile applications based on our clients’ ideas and requirements.
+                    </p>
+                    <p>
+                        Alongside technology development, NovaTech offers practical training and guidance to help people understand how to build applications, work with AI, and develop future-ready skills. We believe AI will play a major role in accelerating innovation and transforming the way we work, and our mission is to empower people to learn, build, and grow with AI.
+                    </p>
+                </div>
+
+                <div class="glass-card rounded-2xl p-8 border border-gray-700/80 space-y-6">
+                    <h3 class="font-heading text-2xl font-bold text-white flex items-center gap-3">
+                        <i class="fa-solid fa-eye text-cyan-400"></i> Our Vision
+                    </h3>
+                    <p class="text-gray-300 leading-relaxed">
+                        “Our vision is to build a future where powerful technology isn’t complicated or difficult to access. We want to help businesses save time, automate repetitive work, and use AI to work smarter.”
+                    </p>
+                    <div class="pt-4 border-t border-gray-800 flex items-center gap-4">
+                        <div>
+                            <p class="font-semibold text-white">NovaTech Leadership</p>
+                            <p class="text-xs text-cyan-400">AI Innovation & Software Development</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Script / Video Presentation Highlight -->
+            <div class="glass-card rounded-3xl p-8 lg:p-12 border border-purple-500/30 space-y-8">
+                <div class="text-center max-w-2xl mx-auto space-y-2">
+                    <h2 class="font-heading text-3xl font-bold text-white">The NovaTech Aim</h2>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="bg-slate-900/80 p-6 rounded-xl border border-gray-800 space-y-3">
+                        <div class="text-cyan-400 font-bold text-lg">01. Simple & Accessible</div>
+                        <p class="text-gray-400 text-sm">"Technology is changing the way we work, learn, and grow—our goal is to make that technology simpler, smarter, and accessible."</p>
+                    </div>
+
+                    <div class="bg-slate-900/80 p-6 rounded-xl border border-gray-800 space-y-3">
+                        <div class="text-purple-400 font-bold text-lg">02. Real Problems</div>
+                        <p class="text-gray-400 text-sm">"We believe technology should solve real problems. We focus on understanding what people actually need to create efficient solutions."</p>
+                    </div>
+
+                    <div class="bg-slate-900/80 p-6 rounded-xl border border-gray-800 space-y-3">
+                        <div class="text-blue-400 font-bold text-lg">03. Future Ready</div>
+                        <p class="text-gray-400 text-sm">"We’re just getting started—where ideas meet technology, and technology becomes innovation. Welcome to the future."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== PAGE: SERVICES ==================== -->
+        <section id="page-services" class="page-view hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
+            <div class="text-center max-w-3xl mx-auto space-y-4">
+                <h2 class="text-xs font-semibold text-cyan-400 uppercase tracking-widest">Solutions & Capabilities</h2>
+                <h1 class="font-heading text-4xl sm:text-5xl font-extrabold text-white">Comprehensive <span class="gradient-text">Services</span></h1>
+                <p class="text-gray-400 text-base sm:text-lg">Discover our full spectrum of software development, AI automation, and graphic editing capabilities.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Detailed Service 1 -->
+                <div class="glass-card glass-card-hover p-8 rounded-2xl border border-gray-800 space-y-6">
+                    <div class="w-14 h-14 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 text-2xl">
+                        <i class="fa-solid fa-code"></i>
+                    </div>
+                    <h3 class="font-heading text-2xl font-bold text-white">1. Web & Mobile App Development</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        We build enterprise-grade, responsive websites, scalable web applications, and intuitive native mobile apps customized specifically to client specifications.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-300">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> Full-stack Responsive Web Applications</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> Cross-platform Mobile Apps (iOS & Android)</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> Custom API Development & Integration</li>
+                    </ul>
+                    <button onclick="openInquiryModal('Web & Mobile Development')" class="w-full py-3 rounded-xl gradient-bg text-white font-semibold shadow-neon">Inquire Now</button>
+                </div>
+
+                <!-- Detailed Service 2 -->
+                <div class="glass-card glass-card-hover p-8 rounded-2xl border border-gray-800 space-y-6">
+                    <div class="w-14 h-14 rounded-2xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 text-2xl">
+                        <i class="fa-solid fa-robot"></i>
+                    </div>
+                    <h3 class="font-heading text-2xl font-bold text-white">2. AI Solutions & Agents</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Automate repetitive workflows and improve business efficiency with custom intelligent autonomous AI agents designed for customer support, sales, and analytics.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-300">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-purple-400"></i> Autonomous AI Conversational Agents</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-purple-400"></i> Workflow Automation & Bot Pipelines</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-purple-400"></i> Custom LLM & Data Integration</li>
+                    </ul>
+                    <button onclick="openInquiryModal('AI Solutions & Agents')" class="w-full py-3 rounded-xl gradient-bg text-white font-semibold shadow-purple">Inquire Now</button>
+                </div>
+
+                <!-- Detailed Service 3 -->
+                <div class="glass-card glass-card-hover p-8 rounded-2xl border border-gray-800 space-y-6">
+                    <div class="w-14 h-14 rounded-2xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 text-2xl">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+                    <h3 class="font-heading text-2xl font-bold text-white">3. AI & Coding Education</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Empower yourself or your engineering teams with practical hands-on classes in Python programming, machine learning fundamentals, and practical AI tools.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-300">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-blue-400"></i> Python Coding Bootcamps & Classes</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-blue-400"></i> Practical AI Acceleration Workshops</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-blue-400"></i> Skill Development for Future Tech</li>
+                    </ul>
+                    <button onclick="navigateTo('academy')" class="w-full py-3 rounded-xl border border-blue-500 text-blue-400 font-semibold hover:bg-blue-500/10 transition">Explore Courses</button>
+                </div>
+
+                <!-- Detailed Service 4 -->
+                <div class="glass-card glass-card-hover p-8 rounded-2xl border border-gray-800 space-y-6">
+                    <div class="w-14 h-14 rounded-2xl bg-pink-500/10 border border-pink-500/30 flex items-center justify-center text-pink-400 text-2xl">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+                    <h3 class="font-heading text-2xl font-bold text-white">4. Creative Banner & Graphic Editing</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Professional branding graphics, banner designs for digital marketing campaigns, UI graphics, and comprehensive photo/video editing.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-300">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-pink-400"></i> High-converting Promotional Banner Design</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-pink-400"></i> UI/UX Prototyping & Media Editing</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-pink-400"></i> Social Media Brand Identity Kits</li>
+                    </ul>
+                    <button onclick="openInquiryModal('Creative & Graphic Design')" class="w-full py-3 rounded-xl gradient-bg text-white font-semibold shadow-neon">Inquire Now</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== PAGE: AI ACADEMY / COURSES ==================== -->
+        <section id="page-academy" class="page-view hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
+            <div class="text-center max-w-3xl mx-auto space-y-4">
+                <h2 class="text-xs font-semibold text-cyan-400 uppercase tracking-widest">Skill Acceleration</h2>
+                <h1 class="font-heading text-4xl sm:text-5xl font-extrabold text-white">NovaTech <span class="gradient-text">AI Academy</span></h1>
+                <p class="text-gray-400 text-base sm:text-lg">Hands-on courses in Python coding and practical AI technology to make you future-ready.</p>
+            </div>
+
+            <!-- Search & Filter Controls -->
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-4 glass-card p-4 rounded-xl border border-gray-800">
+                <div class="relative w-full sm:w-72">
+                    <i class="fa-solid fa-search absolute left-3 top-3.5 text-gray-500"></i>
+                    <input type="text" id="course-search" placeholder="Search courses..." oninput="filterCourses()" class="w-full bg-slate-900 text-white pl-10 pr-4 py-2 rounded-lg border border-gray-700 text-sm focus:outline-none focus:border-cyan-400">
+                </div>
+                <div class="flex gap-2 w-full sm:w-auto">
+                    <button onclick="setCourseFilter('all')" class="filter-btn active px-4 py-2 rounded-lg bg-cyan-500/20 text-cyan-400 text-xs font-semibold border border-cyan-500/30">All</button>
+                    <button onclick="setCourseFilter('python')" class="filter-btn px-4 py-2 rounded-lg bg-slate-900 text-gray-400 text-xs font-semibold border border-gray-800 hover:text-white">Python</button>
+                    <button onclick="setCourseFilter('ai')" class="filter-btn px-4 py-2 rounded-lg bg-slate-900 text-gray-400 text-xs font-semibold border border-gray-800 hover:text-white">AI Agents</button>
+                </div>
+            </div>
+
+            <!-- Course Cards Grid -->
+            <div class="grid md:grid-cols-2 gap-8" id="course-grid">
+                <!-- Course 1 -->
+                <div class="course-card glass-card glass-card-hover rounded-2xl p-6 border border-gray-800 space-y-5" data-category="python">
+                    <div class="flex justify-between items-start">
+                        <span class="px-3 py-1 rounded-full bg-blue-500/20 text-blue-400 text-xs font-semibold">Python Mastery</span>
+                        <span class="text-cyan-400 text-sm font-bold">4 Weeks</span>
+                    </div>
+                    <h3 class="font-heading text-2xl font-bold text-white">Python Coding Essentials</h3>
+                    <p class="text-gray-400 text-sm">Master Python fundamentals, logic building, data structure handling, and web automation scripting from scratch.</p>
+                    <div class="space-y-2 text-xs text-gray-300">
+                        <p><i class="fa-solid fa-circle-check text-cyan-400 mr-2"></i>Ideal for Beginners & Creators</p>
+                        <p><i class="fa-solid fa-circle-check text-cyan-400 mr-2"></i>Hands-on Projects & Exercises</p>
+                    </div>
+                    <div class="pt-4 border-t border-gray-800 flex justify-between items-center">
+                        <div>
+                            <p class="text-xs text-gray-500">Course Fee</p>
+                            <p class="font-bold text-white text-lg">$199 <span class="text-xs text-gray-400 font-normal">/ student</span></p>
+                        </div>
+                        <button onclick="openEnrollModal('Python Coding Essentials')" class="px-5 py-2.5 rounded-xl gradient-bg text-white text-sm font-semibold shadow-neon">Enroll Now</button>
+                    </div>
+                </div>
+
+                <!-- Course 2 -->
+                <div class="course-card glass-card glass-card-hover rounded-2xl p-6 border border-gray-800 space-y-5" data-category="ai">
+                    <div class="flex justify-between items-start">
+                        <span class="px-3 py-1 rounded-full bg-purple-500/20 text-purple-400 text-xs font-semibold">AI Acceleration</span>
+                        <span class="text-cyan-400 text-sm font-bold">6 Weeks</span>
+                    </div>
+                    <h3 class="font-heading text-2xl font-bold text-white">Practical AI Agents & Acceleration</h3>
+                    <p class="text-gray-400 text-sm">Learn to build, deploy, and monetize autonomous AI agents using modern LLM frameworks, APIs, and automation.</p>
+                    <div class="space-y-2 text-xs text-gray-300">
+                        <p><i class="fa-solid fa-circle-check text-purple-400 mr-2"></i>Real-world AI Workflows</p>
+                        <p><i class="fa-solid fa-circle-check text-purple-400 mr-2"></i>Includes Agent API Architectures</p>
+                    </div>
+                    <div class="pt-4 border-t border-gray-800 flex justify-between items-center">
+                        <div>
+                            <p class="text-xs text-gray-500">Course Fee</p>
+                            <p class="font-bold text-white text-lg">$349 <span class="text-xs text-gray-400 font-normal">/ student</span></p>
+                        </div>
+                        <button onclick="openEnrollModal('Practical AI Agents & Acceleration')" class="px-5 py-2.5 rounded-xl gradient-bg text-white text-sm font-semibold shadow-neon">Enroll Now</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== PAGE: CONTACT US ==================== -->
+        <section id="page-contact" class="page-view hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
+            <div class="text-center max-w-3xl mx-auto space-y-4">
+                <h2 class="text-xs font-semibold text-cyan-400 uppercase tracking-widest">Connect With Us</h2>
+                <h1 class="font-heading text-4xl sm:text-5xl font-extrabold text-white">Get In <span class="gradient-text">Touch</span></h1>
+                <p class="text-gray-400 text-base sm:text-lg">Have a project idea or want to inquire about our classes? Send us a message!</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-12">
+                <!-- Contact Form -->
+                <div class="glass-card rounded-2xl p-8 border border-gray-800">
+                    <form id="contact-form" onsubmit="handleContactSubmit(event)" class="space-y-6">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Your Name</label>
+                            <input type="text" required placeholder="John Doe" class="w-full bg-slate-900 border border-gray-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-cyan-400">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Email Address</label>
+                            <input type="email" required placeholder="john@example.com" class="w-full bg-slate-900 border border-gray-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-cyan-400">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Service of Interest</label>
+                            <select id="contact-service-select" class="w-full bg-slate-900 border border-gray-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-cyan-400">
+                                <option value="Web & Mobile Development">Web & Mobile Application Development</option>
+                                <option value="AI Agents & Automation">AI Agents & Workflow Automation</option>
+                                <option value="AI & Python Classes">AI Acceleration / Python Classes</option>
+                                <option value="Graphic Design & Banner Editing">Banner Design & Graphic Editing</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">Your Message</label>
+                            <textarea rows="4" required placeholder="Tell us about your project requirements or questions..." class="w-full bg-slate-900 border border-gray-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-cyan-400"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full py-3.5 rounded-xl gradient-bg font-semibold text-white shadow-neon">Send Message</button>
+                    </form>
+                </div>
+
+                <!-- Contact Details & Map Placeholder -->
+                <div class="space-y-8">
+                    <div class="glass-card rounded-2xl p-8 border border-gray-800 space-y-6">
+                        <h3 class="font-heading text-2xl font-bold text-white">Contact Information</h3>
+                        <div class="space-y-4 text-sm text-gray-300">
+                            <div class="flex items-center gap-4">
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500">Email Us</p>
+                                    <p class="text-white font-medium">company.novatech14@gmail.com</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-4">
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500">Contact</p>
+                                    <p class="text-white font-medium">+91 8983693446</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Map Placeholder -->
+                    <div class="glass-card rounded-2xl h-60 border border-gray-800 relative overflow-hidden flex flex-col items-center justify-center text-center p-6 bg-slate-900/60">
+                        <i class="fa-solid fa-map-location-dot text-4xl text-cyan-400 mb-3 animate-bounce"></i>
+                        <h4 class="font-bold text-white text-base">NovaTech Is A Online Company</h4>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Enrollment / Service Modal -->
+    <div id="modal-backdrop" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="glass-card rounded-2xl max-w-md w-full p-6 border border-gray-700 relative space-y-6">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <div class="space-y-2">
+                <h3 class="font-heading text-2xl font-bold text-white" id="modal-title">Inquiry Form</h3>
+                <p class="text-xs text-gray-400" id="modal-subtitle">Submit your inquiry and our team will get back to you promptly.</p>
+            </div>
+            <form onsubmit="handleModalSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-medium text-gray-300 mb-1">Full Name</label>
+                    <input type="text" required class="w-full bg-slate-900 border border-gray-700 rounded-lg px-3 py-2 text-white text-sm focus:border-cyan-400 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-300 mb-1">Email Address</label>
+                    <input type="email" required class="w-full bg-slate-900 border border-gray-700 rounded-lg px-3 py-2 text-white text-sm focus:border-cyan-400 focus:outline-none">
+                </div>
+                <button type="submit" class="w-full py-3 rounded-xl gradient-bg text-white font-semibold text-sm shadow-neon">Submit Request</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast-notification" class="fixed bottom-6 right-6 z-50 hidden glass-card p-4 rounded-xl border border-cyan-400 text-cyan-400 text-sm font-semibold flex items-center gap-3 shadow-neon">
+        <i class="fa-solid fa-circle-check text-xl"></i>
+        <span id="toast-text">Action completed successfully!</span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="glass-card border-t border-gray-800/80 mt-20 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="space-y-4 md:col-span-2">
+                    <div class="flex items-center space-x-3">
+                        </div>
+                        <span class="font-heading font-extrabold text-xl text-white">NOVA<span class="gradient-text">TECH</span></span>
+                    </div>
+                    <p class="text-gray-400 text-sm max-w-md">
+                        Where ideas meet technology, and technology becomes innovation. Empowering digital growth through custom app development and practical AI acceleration.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white text-sm uppercase mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" onclick="navigateTo('home'); return false;" class="hover:text-cyan-400">Home</a></li>
+                        <li><a href="#" onclick="navigateTo('about'); return false;" class="hover:text-cyan-400">About Us</a></li>
+                        <li><a href="#" onclick="navigateTo('services'); return false;" class="hover:text-cyan-400">Services</a></li>
+                        <li><a href="#" onclick="navigateTo('academy'); return false;" class="hover:text-cyan-400">AI Academy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white text-sm uppercase mb-4">Connect</h4>
+                    <div class="flex space-x-4 text-gray-400">
+                        <a href="#" class="hover:text-cyan-400 text-lg"><i class="fa-brands fa-whatsapp"></i></a>
+                        <a href="#" class="hover:text-cyan-400 text-lg"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="hover:text-cyan-400 text-lg"><i class="fa-brands fa-google"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-800 text-center text-xs text-gray-500">
+                © 2026 NovaTech. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Application Router & Handlers -->
+    <script>
+        // Router function for dynamic multi-page simulation
+        function navigateTo(pageId) {
+            const pages = document.querySelectorAll('.page-view');
+            pages.forEach(page => page.classList.add('hidden'));
+
+            const targetPage = document.getElementById(`page-${pageId}`);
+            if (targetPage) {
+                targetPage.classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            // Update nav link active status
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => link.classList.remove('active'));
+
+            const activeNav = document.getElementById(`nav-${pageId}`);
+            if (activeNav) {
+                activeNav.classList.add('active');
+            }
+        }
+
+        // Toggle mobile drawer menu
+        document.getElementById('mobile-menu-btn').addEventListener('click', toggleMobileMenu);
+
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        }
+
+        // Modal Functionality
+        function openEnrollModal(courseName) {
+            document.getElementById('modal-title').innerText = `Enroll in ${courseName}`;
+            document.getElementById('modal-subtitle').innerText = 'Complete the form below to reserve your slot in this course.';
+            document.getElementById('modal-backdrop').classList.remove('hidden');
+        }
+
+        function openInquiryModal(serviceName) {
+            document.getElementById('modal-title').innerText = `Inquire about ${serviceName}`;
+            document.getElementById('modal-subtitle').innerText = 'Let us know your requirements and we will send a project proposal.';
+            document.getElementById('modal-backdrop').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('modal-backdrop').classList.add('hidden');
+        }
+
+        function handleModalSubmit(e) {
+            e.preventDefault();
+            closeModal();
+            showToast('Your request has been submitted! We will contact you soon.');
+        }
+
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            showToast('Thank you! Your message has been sent to NovaTech.');
+            e.target.reset();
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast-notification');
+            document.getElementById('toast-text').innerText = message;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 4000);
+        }
+
+        // Course Search and Filter
+        function filterCourses() {
+            const query = document.getElementById('course-search').value.toLowerCase();
+            const courses = document.querySelectorAll('.course-card');
+
+            courses.forEach(card => {
+                const text = card.innerText.toLowerCase();
+                card.style.display = text.includes(query) ? 'block' : 'none';
+            });
+        }
+
+        function setCourseFilter(category) {
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('active', 'bg-cyan-500/20', 'text-cyan-400');
+                btn.classList.add('bg-slate-900', 'text-gray-400');
+            });
+
+            event.target.classList.add('active', 'bg-cyan-500/20', 'text-cyan-400');
+            event.target.classList.remove('bg-slate-900', 'text-gray-400');
+
+            const courses = document.querySelectorAll('.course-card');
+            courses.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
